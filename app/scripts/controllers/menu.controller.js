@@ -1,6 +1,7 @@
+'use strict';
+
 robiquetteApp
-  .controller('MenuCtrl', function ($scope) {
+  .controller('MenuCtrl', ['$scope', function ($scope) {
 
 
-
-  });
+  }]);
