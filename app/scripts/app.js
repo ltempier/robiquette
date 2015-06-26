@@ -9,7 +9,7 @@ var robiquetteApp = angular
     'ngTouch',
     'firebase',
     'leaflet-directive',
-    'geolocation'
+    'ngGeolocation'
   ])
   .config(['$routeProvider', function ($routeProvider) {
 
@@ -26,32 +26,40 @@ var robiquetteApp = angular
         templateUrl: 'views/menu.html',
         controller: 'MenuCtrl'
       })
+      .when('/ro-admin', {
+        templateUrl: 'views/admin.html',
+        controller: 'AdminCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
   }])
   .run(['$rootScope', '$firebaseObject', function ($rootScope, $firebaseObject) {
-    var robiquette = $firebaseObject(new Firebase("https://robiquette.firebaseio.com"));
-    robiquette.robiquettes = [
-      {
-        lat: 48.86,
-        lng: 2.35,
-        message: 'Robiquette 1',
-        icon: {
-          iconUrl: 'images/robiquette_pin.png',
-          iconSize: [30, 30],
-          popupAnchor: [0, -15]
-        }
-      }, {
-        lat: 48.84,
-        lng: 2.36,
-        message: 'Robiquette 2',
-        icon: {
-          iconUrl: 'images/robiquette_pin.png',
-          iconSize: [30, 30],
-          popupAnchor: [0, -15]
-        }
-      }
-    ];
-    robiquette.$save()
+    //var robiquette = $firebaseObject(new Firebase("https://robiquette.firebaseio.com"));
+    //robiquette.robiquettes = [
+    //  {
+    //    id: 'robiquette_1',
+    //    lat: 48.86,
+    //    lng: 2.35,
+    //    message: 'Robiquette 1',
+    //    draggable: true,
+    //    icon: {
+    //      iconUrl: 'images/robiquette_pin.png',
+    //      iconSize: [30, 30],
+    //      popupAnchor: [0, -15]
+    //    }
+    //  }, {
+    //    id: 'robiquette_2',
+    //    lat: 48.84,
+    //    lng: 2.36,
+    //    message: 'Robiquette 2',
+    //    draggable: true,
+    //    icon: {
+    //      iconUrl: 'images/robiquette_pin.png',
+    //      iconSize: [30, 30],
+    //      popupAnchor: [0, -15]
+    //    }
+    //  }
+    //];
+    //robiquette.$save()
   }]);
