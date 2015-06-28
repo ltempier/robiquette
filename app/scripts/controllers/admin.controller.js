@@ -45,27 +45,51 @@ robiquetteApp
         markers: {}
       };
       $scope.robiquettes = {};
+
+      $scope.isFollowMe = false;
+      $scope.followMe = followMe;
+      $scope.save = save;
+
       loadMarkers(robiquettes);
+
       robiquettes.$watch(function () {
         robiquettes.$loaded().then(loadMarkers);
       });
+
+      $scope.$watch('robiquetteIndex', function (robiquetteIndex) {
+        if (robiquetteIndex) {
+          _.each($scope.map.markers, function (marker, key) {
+            marker.draggable = key == robiquetteIndex;
+            marker.opacity = key == robiquetteIndex ? 1 : 0.5
+          });
+          followMe(true);
+          $scope.robiquette = robiquettes[robiquetteIndex]
+        }
+      });
+
+      $scope.$on('leafletDirectiveMarker.dragend', function (e, marker) {
+        if (marker.modelName == $scope.robiquetteIndex)
+          $scope.robiquette = marker.model;
+        else
+          console.log('select good robiquette')
+      });
+
       function loadMarkers(datas) {
         _.each(datas, function (data, key) {
           if (key.indexOf('$') != 0) {
             $scope.robiquettes[key] = data;
-            $scope.map.markers[key] = _.extend(data, {
-              draggable: true
-            });
-            if (!$scope.robiquette)
-              $scope.robiquette = $scope.map.markers[key]
+            $scope.map.markers[key] = data;
+            if (!$scope.robiquetteIndex) {
+              $scope.robiquetteIndex = key
+            }
           }
         });
       }
 
       var stopFollowMePromise = undefined;
-      $scope.isFollowMe = false;
-      $scope.followMe = function () {
-        $scope.isFollowMe = !$scope.isFollowMe;
+
+      function followMe(stop) {
+        $scope.isFollowMe = stop == true ? false : !$scope.isFollowMe;
         if (angular.isDefined(stopFollowMePromise)) {
           $interval.cancel(stopFollowMePromise);
           stopFollowMePromise = undefined;
@@ -73,11 +97,27 @@ robiquetteApp
         if ($scope.isFollowMe == true) {
           stopFollowMePromise = $interval(function () {
             $geolocation.getCurrentPosition({
-              timeout: 1000
+              timeout: 5000
             }).then(function (position) {
-              $scope.myPosition = position;
+              $scope.myPosition = position.coords;
+              $scope.myPosition.lastUpdate = new Date(position.timestamp);
+              if ($scope.robiquette) {
+                $scope.robiquette.lat = $scope.myPosition.latitude;
+                $scope.robiquette.lng = $scope.myPosition.longitude;
+                save()
+              }
             });
-          }, 1000);
+          }, 10000);
+        }
+      }
+
+      function save() {
+        console.log('save ' + $scope.robiquetteIndex);
+        if ($scope.robiquetteIndex && $scope.robiquette) {
+          _.extend(robiquettes[$scope.robiquetteIndex], $scope.robiquette, {draggable: false, opacity: 1});
+          robiquettes.$save($scope.robiquetteIndex).then(function (ref) {
+
+          });
         }
       }
     }]);
