@@ -1,75 +1,77 @@
-<div class="well" ng-show="auth == null">
-  <form class="form-horizontal" ng-submit="login()">
-    <div class="form-group">
-      <label class="col-lg-2 control-label">Email</label>
+<div class="container">
+  <div class="well" ng-show="auth == null">
+    <form class="form-horizontal" ng-submit="login()">
+      <div class="form-group">
+        <label class="col-lg-2 control-label">Email</label>
 
-      <div class="col-lg-10">
-        <input type="text" class="form-control" name="email" placeholder="Email" ng-model="user.email">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-lg-2 control-label">Password</label>
-
-      <div class="col-lg-10">
-        <input type="password" class="form-control" name="password" placeholder="Password" ng-model="user.password">
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <button type="submit" class="btn btn-success">
-          Login <i ng-show="isLogin" class="fa fa-circle-o-notch fa-spin"></i>
-        </button>
-        <span class="text-danger" ng-show="loginError"> {{loginError}}</span>
-      </div>
-    </div>
-  </form>
-</div>
-
-<div ng-hide="auth == null">
-
-  <div class="row">
-    <div class="col-lg-6">
-      <leaflet center="map.center" markers="map.markers" tiles="map.tiles" height="500px" width="100%"></leaflet>
-    </div>
-    <div class="col-lg-6">
-      <div class="well">
-        <div class="form-group">
-          <label class="control-label">Select robiquette : </label>
-          <select class="form-control" ng-options="value as value.id for (key, value) in robiquettes"
-                  ng-model="robiquette"></select>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" name="email" placeholder="Email" ng-model="user.email">
         </div>
       </div>
+      <div class="form-group">
+        <label class="col-lg-2 control-label">Password</label>
 
-      <div class="well" ng-if="robiquette">
-        <div class="form-group">
-          <label class="control-label">Message</label>
-          <input type="text" class="form-control" ng-model="robiquette.message">
+        <div class="col-lg-10">
+          <input type="password" class="form-control" name="password" placeholder="Password" ng-model="user.password">
         </div>
-        <div class="form-group">
-          <label class="control-label">Latitude</label>
-          <input type="text" class="form-control" ng-model="robiquette.lat">
-        </div>
-
-        <div class="form-group">
-          <label class="control-label">Longitude</label>
-          <input type="text" class="form-control" ng-model="robiquette.lng">
-        </div>
-
-        <div class="form-group">
-          <label class="control-label">Follow</label>
-          <input type="checkbox" class="js-switch" ui-switch checked ng-model="follow"/>
-        </div>
-
       </div>
-    </div>
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="submit" class="btn btn-success">
+            Login <i ng-show="isLogin" class="fa fa-circle-o-notch fa-spin"></i>
+          </button>
+          <span class="text-danger" ng-show="loginError"> {{loginError}}</span>
+        </div>
+      </div>
+    </form>
   </div>
-  <br>
 
-  <div class="well well-sm m0">
-    <div class="pull-right">
-      <button type="button" class="btn btn-default" ng-click="logout()">logout</button>
+  <div ng-hide="auth == null">
+
+    <div class="row">
+      <div class="col-lg-6">
+        <leaflet center="map.center" markers="map.markers" tiles="map.tiles" height="500px" width="100%"></leaflet>
+      </div>
+      <div class="col-lg-6">
+        <div class="well">
+          <div class="form-group">
+            <label class="control-label">Select robiquette : </label>
+            <select class="form-control" ng-options="value as value.id for (key, value) in robiquettes"
+                    ng-model="robiquette"></select>
+          </div>
+        </div>
+
+        <div class="well" ng-if="robiquette">
+          <div class="form-group">
+            <label class="control-label">Message</label>
+            <input type="text" class="form-control" ng-model="robiquette.message">
+          </div>
+          <div class="form-group">
+            <label class="control-label">Latitude</label>
+            <input type="text" class="form-control" ng-model="robiquette.lat">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Longitude</label>
+            <input type="text" class="form-control" ng-model="robiquette.lng">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Follow</label>
+            <input type="checkbox" class="js-switch" ui-switch checked ng-model="follow"/>
+          </div>
+
+        </div>
+      </div>
     </div>
-    <h5>{{auth.password.email}}</h5>
+    <br>
+
+    <div class="well well-sm m0">
+      <div class="pull-right">
+        <button type="button" class="btn btn-default" ng-click="logout()">logout</button>
+      </div>
+      <h5>{{auth.password.email}}</h5>
+    </div>
   </div>
 </div>
 
