@@ -56,9 +56,9 @@
             <input type="text" class="form-control" ng-model="robiquette.lng">
           </div>
 
-          <button class="btn btn-default" ng-class="{'btn-success' : follow == false}" ng-click="follow = !follow">
-            <span ng-if="follow == false">Start follow me</span>
-            <span ng-if="follow == true">Stop follow me</span>
+          <button class="btn btn-default" ng-class="{'btn-success' : isFollowMe == false}" ng-click="followMe()">
+            <span ng-if="isFollowMe == false">Start follow me</span>
+            <span ng-if="isFollowMe == true">Stop follow me</span>
           </button>
         </div>
       </div>

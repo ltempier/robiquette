@@ -63,23 +63,23 @@ robiquetteApp
       }
 
       var stopFollowMePromise = undefined;
-      $scope.follow = false;
-      $scope.$watch('follow', function (followMeValue) {
+      $scope.isFollowMe = false;
+      $scope.followMe = function () {
+        $scope.isFollowMe = !$scope.isFollowMe;
         if (angular.isDefined(stopFollowMePromise)) {
           $interval.cancel(stopFollowMePromise);
           stopFollowMePromise = undefined;
         }
-        if (followMeValue == true) {
+        if ($scope.isFollowMe == true) {
           stopFollowMePromise = $interval(function () {
             $geolocation.getCurrentPosition({
-              timeout: 60000
+              timeout: 1000
             }).then(function (position) {
               $scope.myPosition = position;
             });
           }, 1000);
         }
-      });
-
+      }
     }]);
 
 
