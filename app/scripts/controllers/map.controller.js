@@ -36,9 +36,14 @@ robiquetteApp
 
 
       function loadMarkers(datas) {
+        var initMarker = {
+          opacity: 1,
+          draggable: false,
+          focus: false
+        };
         _.each(datas, function (data, key) {
           if (key.indexOf('$') != 0) {
-            $scope.map.markers[key] = data
+            $scope.map.markers[key] = _.extend(data, initMarker)
           }
         });
       }

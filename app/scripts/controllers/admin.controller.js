@@ -51,19 +51,16 @@ robiquetteApp
       $scope.save = save;
 
       loadMarkers(robiquettes);
-
       robiquettes.$watch(function () {
         robiquettes.$loaded().then(loadMarkers);
       });
 
       $scope.$watch('robiquetteIndex', function (robiquetteIndex) {
         if (robiquetteIndex) {
-          _.each($scope.map.markers, function (marker, key) {
-            marker.draggable = key == robiquetteIndex;
-            marker.opacity = key == robiquetteIndex ? 1 : 0.5
-          });
+          refreshMarkersDesign();
           followMe(true);
-          $scope.robiquette = robiquettes[robiquetteIndex]
+          $scope.robiquette = robiquettes[robiquetteIndex];
+          centerMap();
         }
       });
 
@@ -73,6 +70,22 @@ robiquetteApp
         else
           console.log('select good robiquette')
       });
+
+      function centerMap() {
+        if ($scope.robiquette) {
+          $scope.map.center.lat = _.clone($scope.robiquette.lat);
+          $scope.map.center.lng = _.clone($scope.robiquette.lng)
+        }
+      }
+
+      function refreshMarkersDesign() {
+        if ($scope.robiquetteIndex) {
+          _.each($scope.map.markers, function (marker, key) {
+            marker.draggable = key == $scope.robiquetteIndex;
+            marker.opacity = key == $scope.robiquetteIndex ? 1 : 0.5
+          });
+        }
+      }
 
       function loadMarkers(datas) {
         _.each(datas, function (data, key) {
@@ -115,9 +128,7 @@ robiquetteApp
         console.log('save ' + $scope.robiquetteIndex);
         if ($scope.robiquetteIndex && $scope.robiquette) {
           _.extend(robiquettes[$scope.robiquetteIndex], $scope.robiquette, {draggable: false, opacity: 1});
-          robiquettes.$save($scope.robiquetteIndex).then(function (ref) {
-
-          });
+          robiquettes.$save().then(refreshMarkersDesign);
         }
       }
     }]);
