@@ -9,7 +9,8 @@ var robiquetteApp = angular
     'ngTouch',
     'firebase',
     'leaflet-directive',
-    'ngGeolocation'
+    'ngGeolocation',
+    'NgSwitchery'
   ])
   .config(['$routeProvider', function ($routeProvider) {
 
