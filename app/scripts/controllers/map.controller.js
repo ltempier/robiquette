@@ -19,6 +19,7 @@ robiquetteApp
         },
         markers: {}
       };
+      loadMarkers(robiquettes);
 
       $geolocation.getCurrentPosition({
         timeout: 60000
@@ -30,13 +31,17 @@ robiquetteApp
       });
 
       robiquettes.$watch(function () {
-        robiquettes.$loaded().then(function (datas) {
-          _.each(datas, function (data, key) {
-            if (key.indexOf('$') != 0)
-              $scope.map.markers[key] = data
-          });
-        });
+        robiquettes.$loaded().then(loadMarkers);
       });
+
+
+      function loadMarkers(datas) {
+        _.each(datas, function (data, key) {
+          if (key.indexOf('$') != 0) {
+            $scope.map.markers[key] = data
+          }
+        });
+      }
     }]);
 
 

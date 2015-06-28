@@ -38,10 +38,6 @@ module.exports = function(config) {
       'bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js',
       'bower_components/underscore/underscore.js',
       'bower_components/ngGeolocation/ngGeolocation.js',
-      'bower_components/transitionize/dist/transitionize.js',
-      'bower_components/fastclick/lib/fastclick.js',
-      'bower_components/switchery/dist/switchery.js',
-      'bower_components/ng-switchery/src/ng-switchery.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
